@@ -1,23 +1,17 @@
 {
-  "name": "ex-db-connect",
-  "version": "1.0.0",
-  "description": "easy db connector",
-  "tags": [
-    "mysql",
-    "db",
-    "connect"
-  ],
-  "authors": "starkey <spirotles@gmail.com>",
-  "main": "./index.js",
-  "readmeFilename": "README.md",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rstarkey1984/ex-db-connect.git"
-  },
-  "readme": "# ex-db-connect -- Simple db connect",
-  "bugs": {
-    "url": "https://github.com/rstarkey1984/ex-db-connect/issues"
-  },
-  "_id": "ex-db-connect@1.0.0",
-  "_from": "ex-curl@"
-}
+	"name": "ex-db-connect",
+	"version": "2.0.0",
+	"description": "easy db connector",
+	"tags": [
+		"mysql",
+		"db",
+		"connect"
+	],
+	"authors": "starkey <spirotles@gmail.com>",
+	"main": "./index.js",
+	"readmeFilename": "README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rstarkey1984/ex-db-connect.git"
+	}
+} 

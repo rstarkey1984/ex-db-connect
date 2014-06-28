@@ -16,18 +16,25 @@ DB.prototype = {
 		var args = [].slice.call(arguments);
 		this.query = args[0];
 		this.params = args[1];
-		this.error = function(err){ console.log(err); };
-		this.result = function(row){};
-		this.end = function(){};
-
-		this.connection = mysql.createConnection(this.config);
-		this.connection.connect(function(err) {
+		this.error = null;
+		this.result = null;
+		this.end = null;
+	},
+	d_error : function(err){ console.log(err); },
+	d_result : function(row){},
+	d_end : function(){},
+	error : null,
+	result : null,
+	end : null, // 여기서 this 는 connection 임
+	execute : function(/* query, params */){
+		var connection = mysql.createConnection(this.config);
+		/*this.connection.connect(function(err) {
 			if (err !== null){
 				console.log(err);
 			}
-		});
+		});*/
 
-		this.connection.config.queryFormat = function (query, values) {
+		connection.config.queryFormat = function (query, values) {
 			if (!values) return query;
 			return query.replace(/\:(\w+)/g, function (txt, key) {
 				if (values.hasOwnProperty(key)) {
@@ -37,36 +44,24 @@ DB.prototype = {
 			}.bind(this));
 		};
 
-		this.error = this.d_error;
-		this.result = this.d_result;
-		this.end = this.d_end;
-	},
-	d_error : function(err){ console.log(err); },
-	d_result : function(row){},
-	d_end : function(){},
-	error : function(err){ console.log(err); },
-	result : function(row){},
-	end : function(){}, // 여기서 this 는 connection 임
-	execute : function(/* query, params */){
-		var rs = this.connection.query(this.query, this.params);
+		var rs = connection.query(this.query, this.params);
 		
-		rs.on('error', this.error);
-		rs.on('result', this.result);
-		rs.on('end', this.end); // 여기서 this 는 DB 객체
+		if ('function' == typeof this.error) rs.on('error', this.error);
+		if ('function' == typeof this.result) rs.on('result', this.result);
+		if ('function' == typeof this.end) rs.on('end', this.end);
 
-		this.connection.end();
+		connection.end();
 	},
-	build_insert_query : function(table, param){
+	build_insert_query : function(table, param, func_params){
 
 		var query = 'insert into ' + table + ' (';
-		for (var key in param){
-			query += key+',';
-		}
+		for (var key in param) query += key+',';
+		for (var key in func_params) query += key+',';
+
 		query = query.substr(0, (query.length-1)) + ') values (';
 	
-		for (var key in param){
-			query += ':'+key+',';
-		}
+		for (var key in param) query += ':'+key+',';
+		for (var key in func_params) query += func_params[key]+',';
 
 		query = query.substr(0, (query.length-1)) + ') ';
 
