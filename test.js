@@ -1,26 +1,23 @@
 var DB = require('./index.js');
 
-process.on('uncaughtException', function (err) {
-	console.log('Caught exception: ' + err);
-});
+var feedons_config = {host:'', user:'', password:'', database:''};
 
-var config = {host:'', user:'', password:'', database:''};
+var db = new DB(feedons_config);
 
-(work_process = function(){
-	var db = new DB(config);
+var query = 'select sum(1+1) ';
 
-	var query = '';
+db.prepare(query);
 
-	db.prepare(query);
+db.result = function(row){
+	console.log(row);
+}
 
-	db.result = function(row){
-		console.log(row);
-	}
+db.error = function(err){
+	console.log(err);
+}
 
-	db.end = function(){
-		console.log('end');
-		work_process();
-	}
+db.end = function(){
+	console.log('end');
+}
 
-	db.execute();
-})();
+db.execute();
