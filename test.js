@@ -1,8 +1,8 @@
 var DB = require('./index.js');
 
-var feedons_config = {host:'', user:'', password:'', database:''};
+var config = {host:'', user:'', password:'', database:''};
 
-var db = new DB(feedons_config);
+var db = new DB(config);
 
 var query = 'select sum(1+1) ';
 

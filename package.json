@@ -1,6 +1,6 @@
 {
 	"name": "ex-db-connect",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"description": "easy db connector",
 	"tags": [
 		"mysql",
