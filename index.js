@@ -4,7 +4,7 @@ var debug = function() {};
 var DB = module.exports = function(/* config */){
 	var args = [].slice.call(arguments);
 	if (args.length === 1) this.config = args[0];
-	this.debug = args[1] === undefined ? false : args[1];
+	this.debug = args[1] === undefined ? true : args[1];
 	if (this.config['connectTimeout'] == undefined) this.config['connectTimeout'] = 60000;
 
 	if (this.debug){

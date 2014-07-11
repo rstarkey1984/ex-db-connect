@@ -22,8 +22,9 @@
 	
 	db.execute();
 
-
 # Easy Make Insert Query
+
+	var config = {host:'', user:'', password:'', database:''};
 
 	var db = new DB(config);
 
@@ -38,6 +39,37 @@
 	func_param['table column name'] = 'now()';
 
 	var query = db.build_insert_query('table_name', param, func_param);
+
+	db.prepare(query, param);
+	db.result = function(row){
+		console.log(row);
+	};
+	db.execute();
+
+# bind params
+
+	var config = {host:'', user:'', password:'', database:''};
+
+	var db = new DB(config);
+	
+	// select query
+	var param = {};
+	param['idx'] = 1;
+
+	var query = 'select * from user where idx = :idx ';
+
+	db.prepare(query, param);
+	db.result = function(row){
+		console.log(row);
+	};
+	db.execute();
+	
+	// update query
+	var param = {};
+	param['idx'] = 1;
+	param['test'] = '123';
+
+	var query = 'update user set test = :test where idx = :idx ';
 
 	db.prepare(query, param);
 	db.result = function(row){
